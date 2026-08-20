@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FINA - Artist & Baker | Creative Frames & Artisan Bakes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-dark: #0f0f0f;
+            --primary-light: #f8f8f8;
+            --accent-pink: #FF1493;
+            --accent-blue: #00D9FF;
+            --accent-orange: #FF6B35;
+            --accent-yellow: #FFD700;
+            --accent-purple: #9D4EDD;
+            --text-dark: #1a1a1a;
+            --text-light: #ffffff;
+            --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--primary-dark);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* NAVIGATION */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(15, 15, 15, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .logo-container:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-svg {
+            width: 45px;
+            height: 45px;
+            animation: slideInDown 0.6s ease, logoPulse 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 10px rgba(255, 20, 147, 0.3));
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-blue), var(--accent-yellow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+            animation: slideInDown 0.6s ease;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            transition: var(--transition);
+            font-size: 0.95rem;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-pink), var(--accent-blue));
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .mobile-menu span {
+            width: 25px;
+            height: 2px;
+            background: var(--text-light);
+            transition: var(--transition);
+        }
+
+        /* HERO SECTION */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #1a1a2e 100%);
+            padding-top: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255, 20, 147, 0.15) 0%, transparent 70%);
+            top: -50px;
+            right: -100px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(0, 217, 255, 0.15) 0%, transparent 70%);
+            bottom: -100px;
+            left: -50px;
+            animation: float 8s ease-in-out infinite reverse;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 10;
+            max-width: 900px;
+            padding: 0 2rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+            color: var(--text-light);
+            letter-spacing: -1px;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--accent-pink) 0%, var(--accent-blue) 50%, var(--accent-yellow) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s ease infinite;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 2rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+            animation: fadeInUp 1.2s ease;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-blue));
+            color: var(--text-light);
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-yellow));
+            z-index: -1;
+            transition: var(--transition);
+        }
+
+        .cta-button:hover::before {
+            left: 0;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(255, 20, 147, 0.4);
+        }
+
+        /* GALLERY SECTION */
+        .gallery {
+            background: var(--primary-light);
+            padding: 5rem 2rem;
+            min-height: 100vh;
+        }
+
+        .gallery h2 {
+            text-align: center;
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+            letter-spacing: -1px;
+        }
+
+        .gallery-subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 4rem;
+            font-weight: 300;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            cursor: pointer;
+            aspect-ratio: 1;
+            
+        }
+
+        .gallery-item:nth-child(1) {
+            animation: scaleIn 0.8s ease 0.1s both;
+        }
+
+        .gallery-item:nth-child(2) {
+            animation: scaleIn 0.8s ease 0.2s both;
+        }
+
+        .gallery-item:nth-child(3) {
+            animation: scaleIn 0.8s ease 0.3s both;
+        }
+
+        .gallery-item:nth-child(4) {
+            animation: scaleIn 0.8s ease 0.4s both;
+        }
+
+        .gallery-item:nth-child(5) {
+            animation: scaleIn 0.8s ease 0.5s both;
+        }
+
+        .gallery-item:nth-child(6) {
+            animation: scaleIn 0.8s ease 0.6s both;
+        }
+
+        .gallery-item:nth-child(7) {
+            animation: scaleIn 0.8s ease 0.7s both;
+        }
+
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.08);
+        }
+
+        .gallery-frame {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 3px solid transparent;
+            pointer-events: none;
+            border-image: linear-gradient(135deg, var(--accent-pink), var(--accent-blue), var(--accent-yellow)) 1;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover .gallery-frame {
+            opacity: 1;
+            animation: framePulse 0.6s ease;
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0);
+            display: flex;
+            align-items: flex-end;
+            padding: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .gallery-label {
+            color: var(--text-light);
+            font-weight: 600;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover .gallery-label {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* SERVICES SECTION */
+        .services {
+            background: var(--primary-dark);
+            padding: 5rem 2rem;
+            min-height: auto;
+        }
+
+        .services h2 {
+            text-align: center;
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 3rem;
+            color: var(--text-light);
+            letter-spacing: -1px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 2.5rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 20, 147, 0.2);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255, 20, 147, 0.1), transparent);
+            transition: var(--transition);
+        }
+
+        .service-card:hover {
+            border-color: var(--accent-pink);
+            transform: translateY(-10px);
+        }
+
+        .service-card:hover::before {
+            top: -25%;
+            right: -25%;
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .service-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--text-light);
+            font-weight: 700;
+        }
+
+        .service-card p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+
+        /* ABOUT SECTION */
+        .about {
+            background: var(--primary-light);
+            padding: 5rem 2rem;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+            letter-spacing: -1px;
+        }
+
+        .about-text p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-highlights {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .highlight {
+            padding: 1.5rem;
+            background: var(--primary-dark);
+            border-radius: 10px;
+            color: var(--text-light);
+        }
+
+        .highlight-number {
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .highlight-text {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 0.5rem;
+        }
+
+        /* CONTACT SECTION */
+        .contact {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #1a1a2e 100%);
+            padding: 5rem 2rem;
+            text-align: center;
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .contact h2 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+
+        .contact p {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .social-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--accent-pink);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .social-icon:hover {
+            background: var(--accent-pink);
+            transform: translateY(-5px);
+        }
+
+        /* FOOTER */
+        footer {
+            background: #000;
+            color: rgba(255, 255, 255, 0.6);
+            padding: 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* ANIMATIONS */
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(20px);
+            }
+        }
+
+        @keyframes shimmer {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.8;
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes framePulse {
+            0% {
+                transform: scale(1);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.05);
+                opacity: 1;
+            }
+        }
+
+        @keyframes logoPulse {
+            0%, 100% {
+                filter: drop-shadow(0 0 10px rgba(255, 20, 147, 0.3));
+            }
+            50% {
+                filter: drop-shadow(0 0 20px rgba(0, 217, 255, 0.5));
+            }
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-container {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery h2,
+            .services h2,
+            .contact h2 {
+                font-size: 2rem;
+            }
+
+            .about-text h2 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVIGATION -->
+    <nav>
+        <div class="logo-container">
+            <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <!-- Outer Frame -->
+                <rect x="15" y="15" width="70" height="70" fill="none" stroke="url(#logoGradient)" stroke-width="2" rx="8"/>
+                <rect x="20" y="20" width="60" height="60" fill="none" stroke="url(#logoGradient)" stroke-width="1" rx="6" opacity="0.5"/>
+                
+                <!-- Artistic elements inside frame -->
+                <!-- Left side - Paint splashes -->
+                <circle cx="35" cy="30" r="3" fill="url(#logoGradient)"/>
+                <circle cx="32" cy="38" r="2.5" fill="url(#logoGradient)"/>
+                <circle cx="38" cy="42" r="2" fill="url(#logoGradient)"/>
+                <path d="M 35 30 Q 32 35 30 40" stroke="url(#logoGradient)" stroke-width="1.5" fill="none"/>
+                
+                <!-- Center - Cake/Fork symbol -->
+                <circle cx="50" cy="50" r="12" fill="none" stroke="url(#logoGradient)" stroke-width="1.5"/>
+                
+                <!-- Fork on left -->
+                <line x1="44" y1="45" x2="44" y2="55" stroke="url(#logoGradient)" stroke-width="1.5"/>
+                <circle cx="42" cy="44" r="1.2" fill="url(#logoGradient)"/>
+                <circle cx="46" cy="44" r="1.2" fill="url(#logoGradient)"/>
+                <circle cx="44" cy="46" r="0.8" fill="url(#logoGradient)"/>
+                
+                <!-- Palette on right -->
+                <ellipse cx="60" cy="50" rx="4" ry="5" fill="none" stroke="url(#logoGradient)" stroke-width="1.5"/>
+                <circle cx="57" cy="48" r="1" fill="url(#logoGradient)"/>
+                <circle cx="62" cy="48" r="1" fill="url(#logoGradient)"/>
+                <circle cx="59" cy="52" r="1" fill="url(#logoGradient)"/>
+                <circle cx="61" cy="52" r="1" fill="url(#logoGradient)"/>
+                
+                <!-- Right side - Decorative elements -->
+                <circle cx="68" cy="32" r="2.5" fill="url(#logoGradient)"/>
+                <circle cx="65" cy="40" r="2" fill="url(#logoGradient)"/>
+                <circle cx="70" cy="45" r="1.8" fill="url(#logoGradient)"/>
+                
+                <!-- Bottom flourish -->
+                <path d="M 30 65 Q 50 70 70 65" stroke="url(#logoGradient)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                
+                <!-- Gradient definition -->
+                <defs>
+                    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#FF1493;stop-opacity:1" />
+                        <stop offset="50%" style="stop-color:#00D9FF;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#FFD700;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+            </svg>
+            <span class="logo-text">FINA</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#gallery">Portfolio</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="mobile-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Artistic <span>Frames</span> & Artisan <span>Bakes</span></h1>
+            <p class="hero-subtitle">Transforming visions into edible art and captivating frames</p>
+            <a href="#gallery" class="cta-button">
+                <span>Explore My Work</span>
+                <span>→</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- GALLERY SECTION -->
+    <section class="gallery" id="gallery">
+        <h2>Featured Works</h2>
+        <p class="gallery-subtitle">A curated collection of artistic frames and delicious creations</p>
+        <div class="gallery-grid">
+            <!-- Image 1 -->
+            <div class="gallery-item">
+                <img src="paper.jpg" alt="Colorful artistic portrait" class="gallery-img">
+                <div class="gallery-frame"></div>
+                <div class="gallery-overlay">
+                    <div class="gallery-label">Creative Portrait Series</div>
+                </div>
+            </div>
+
+            <!-- Image 2 -->
+            <div class="gallery-item">
+                <img src="colouredgirl.jpg" alt="Split artistic face" class="gallery-img">
+                <div class="gallery-frame"></div>
+                <div class="gallery-overlay">
+                    <div class="gallery-label">Dual Exposure Frame</div>
+                </div>
+            </div>
+
+            <!-- Image 3 -->
+            <div class="gallery-item">
+                <img src="fishpie.jpg" alt="Fish pies in basket" class="gallery-img">
+                <div class="gallery-overlay">
+                    <div class="gallery-label">Artisan Fish Pies</div>
+                </div>
+            </div>
+
+            <!-- Image 4 -->
+            <div class="gallery-item">
+                <img src="papergirl.jpg" alt="Torn paper portrait" class="gallery-img">
+                <div class="gallery-frame"></div>
+                <div class="gallery-overlay">
+                    <div class="gallery-label">Ethereal Frame Design</div>
+                </div>
+            </div>
+
+            <!-- Image 5 -->
+            <div class="gallery-item">
+                <img src="colouredcake.jpg" alt="Rainbow cake" class="gallery-img">
+                <div class="gallery-overlay">
+                    <div class="gallery-label">Rainbow Celebration Cake</div>
+                </div>
+            </div>
+
+            <!-- Image 6 -->
+            <div class="gallery-item">
+                <img src="fiercedgirl.jpg" alt="Colorful paint effect portrait" class="gallery-img">
+                <div class="gallery-frame"></div>
+                <div class="gallery-overlay">
+                    <div class="gallery-label">Vibrant Art Frame</div>
+                </div>
+            </div>
+
+            <!-- Image 7 -->
+            <div class="gallery-item">
+                <img src="glassed.jpg" alt="Double exposure city" class="gallery-img">
+                <div class="gallery-frame"></div>
+                <div class="gallery-overlay">
+                    <div class="gallery-label">Double Exposure Masterpiece</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES SECTION -->
+    <section class="services" id="services">
+        <h2>My Services</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">🎨</div>
+                <h3>Custom Frame Art</h3>
+                <p>Handcrafted artistic frames with creative designs, from vibrant paint splashes to elegant minimalist styles. Each piece is unique and tailored to your vision.</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">🍰</div>
+                <h3>Artisan Baking</h3>
+                <p>Delicious baked goods from traditional pastries to custom decorated cakes. Every creation is made with premium ingredients and artistic attention to detail.</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">✨</div>
+                <h3>Custom Designs</h3>
+                <p>Personalized commissions for both framed artwork and baked creations. Let's collaborate to bring your ideas to life with creativity and precision.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section class="about" id="about">
+        <div class="about-container">
+            <div class="about-text">
+                <h2>About Me</h2>
+                <p>Hi! I'm Fina, a passionate creator from the University of Bamenda, Cameroon. I blend two artistic passions into every project: visual frame design and artisan baking.</p>
+                
+                <p>Each frame I create tells a story through colors, textures, and artistic expression. Whether it's vibrant digital designs or traditional painted frames, I approach every project with meticulous attention to detail.</p>
+
+                <p>My baking creations are more than just treats—they're edible art. From delicate pastries to stunning celebration cakes, I combine flavors with visual artistry to create memorable experiences.</p>
+
+                <div class="about-highlights">
+                    <div class="highlight">
+                        <div class="highlight-number">1000+</div>
+                        <div class="highlight-text">Frames Created</div>
+                    </div>
+                    <div class="highlight">
+                        <div class="highlight-number">500+</div>
+                        <div class="highlight-text">Happy Clients</div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; color: #999;">
+                <div style="font-size: 5rem; margin-bottom: 1rem;">🎨🍰</div>
+                <p style="font-size: 1.2rem; font-weight: 600; color: var(--text-dark);">Art Meets Flavor</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section class="contact" id="contact">
+        <h2>Let's Create Together</h2>
+        <p>Whether you need custom frames, artisan baked goods, or a unique commission, I'm here to bring your ideas to life.</p>
+        
+        <div class="social-links">
+            <div class="social-icon" onclick="contactMe('pinterest')">📌</div>
+            <div class="social-icon" onclick="contactMe('email')">✉️</div>
+            <div class="social-icon" onclick="contactMe('instagram')">📸</div>
+            <div class="social-icon" onclick="contactMe('whatsapp')">💬</div>
+        </div>
+
+        <a href="mailto:fina@artisticframes.com" class="cta-button">Get In Touch</a>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 Fina | Artist & Baker. All rights reserved. | Bamenda, Cameroon</p>
+    </footer>
+
+    <script>
+        // LOGO CLICK TO TOP
+        document.querySelector('.logo-container').addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // SMOOTH SCROLL
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // SCROLL ANIMATIONS
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe gallery items
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            observer.observe(item);
+        });
+
+        // Mobile menu toggle
+        let menuOpen = false;
+        document.querySelector('.mobile-menu').addEventListener('click', () => {
+            menuOpen = !menuOpen;
+            const nav = document.querySelector('.nav-links');
+            nav.style.display = menuOpen ? 'flex' : 'none';
+            nav.style.position = 'absolute';
+            nav.style.top = '60px';
+            nav.style.left = '0';
+            nav.style.right = '0';
+            nav.style.flexDirection = 'column';
+            nav.style.background = 'var(--primary-dark)';
+            nav.style.padding = '2rem';
+            nav.style.borderBottom = '1px solid rgba(255,255,255,0.1)';
+        });
+
+        // Contact button interactions
+        function contactMe(platform) {
+            const messages = {
+                'pinterest': 'Follow my Pinterest: @FinaFrames',
+                'email': 'Email: fina@artisticframes.com',
+                'instagram': 'Instagram: @FinaCreates',
+                'whatsapp': 'WhatsApp: Connect with me!'
+            };
+            alert(messages[platform]);
+        }
+
+        // Parallax effect on scroll
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            if (hero) {
+                hero.style.backgroundPosition = `0% ${scrolled * 0.5}px`;
+            }
+        });
+
+        // Add entrance animation to elements
+        const fadeInElements = document.querySelectorAll('.service-card, .highlight');
+        fadeInElements.forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            observer.observe(el);
+        });
+
+        // Cursor follow effect on hero
+        const hero = document.querySelector('.hero');
+        document.addEventListener('mousemove', (e) => {
+            if (!hero) return;
+            const x = (e.clientX / window.innerWidth) * 100;
+            const y = (e.clientY / window.innerHeight) * 100;
+            hero.style.backgroundPosition = `${x}% ${y}%`;
+        });
+    </script>
+</body>
+</html>
